@@ -1,20 +1,15 @@
 
 import torch
 from torch import nn
-from torch.nn import functional as F
 from  torch import optim
-import torchvision
 import numpy as np
-from scipy import io
-from numpy import *
 from matplotlib import pyplot as plt
 import pandas as pd
 np.random.seed(1)
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-import dd3
-from dd3 import ddNet
+
 import os
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
@@ -42,7 +37,7 @@ class ddNet(nn.Module):
         x = self.fc2(x)
         return x
 
-filename = './dta厌氧工厂.csv'
+filename = r'../data/dta厌氧工厂.csv'
 data = pd.read_csv(filename)
 
 features = [
@@ -156,7 +151,7 @@ plt.text(0.05, 0.9, '$R^2=%.3f$' % (r2),
          transform=ax.transAxes, size=25, bbox=bbox)
 plt.plot((0, 1), (0, 1), transform=ax.transAxes, ls='--',c='k', label="1:1 line")
 plt.text(2000,500,result)
-plt.savefig('R2_2.jpg',dpi =100)
+plt.savefig(r'..\fig\R2_2.jpg',dpi =100)
 plt.show()
 
 pre_y = net(test_x).detach().numpy()
@@ -165,5 +160,5 @@ fig, ax = plt.subplots(1, 1,figsize=(7,3),dpi=80)
 plt.plot(test_y,'k.-', label='True')
 plt.plot(pre_y,'r--', label='Pre')
 plt.legend(loc='upper right')
-plt.savefig('TRUEvsPRE_2.jpg',dpi =100)
+plt.savefig(r'..\fig\TRUEvsPRE_2.jpg',dpi =100)
 plt.show()
